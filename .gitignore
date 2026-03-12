@@ -37,3 +37,4 @@ AI_CRM_Platform_Implementation_Plan.md
 .env.example
 evals/datasets/company_enrichment_samples.json
 evals/datasets/lead_scoring_samples.json
+notes.todo
