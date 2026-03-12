@@ -1,0 +1,11 @@
+{
+  "ui": {
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "autoThemeSwitching": false
+  },
+  "experimental": {
+    "plan": true
+  }
+}
