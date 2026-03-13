@@ -1,0 +1,44 @@
+# AI CRM Intelligence Platform - Changelog
+
+All notable changes to this project will be documented in this file.
+
+## v0.1.0 — Phase 1: Core Database & Infrastructure
+Date: March 13, 2026
+
+Complete implementation of the relational database layer, core entity models, and automated migration system.
+
+### Added
+* 🐣 Complete database layer using SQLAlchemy 2.0 with full async support.
+* 🐣 Core ORM models for the ecosystem: `Company`, `Lead`, `Enrichment`, `GeneratedContent`, and `LLMEval`.
+* 🐣 Alembic migration infrastructure with an initial auto-generated schema revision.
+* 🐣 Comprehensive Enum types for status tracking, seniority levels, and evaluation categories.
+* 🐣 Integration test for verifying database connectivity and async session handling.
+* 🐣 Support for `cryptography` to handle MySQL `caching_sha2_password` authentication.
+
+### Changed
+* 🔧 Refined database schema for MySQL compatibility, using `CHAR(36)` for UUIDs and `MEDIUMTEXT` for HTML payloads.
+* 🔧 Enhanced configuration system with dynamic `.env` file loading and separate sync/async connection strings.
+* 🔧 Optimized data retrieval with strategic indexes on industry, email, and timestamp columns.
+* 🔧 Updated Docker Compose to align environment variables with application settings.
+
+### Fixed
+* 🐛 Resolved circular dependency issues in model relationships using type-checking blocks and forward references.
+* 🐛 Standardized database server defaults to align with lowercase Enum definitions.
+
+### Docs
+* 📄 Added a visual Database Schema diagram in `docs_resources/`.
+
+### Style
+* 🎨 Refined workspace management via updated `.gitignore` and `.geminiignore` patterns.
+
+## v0.0.1 — Phase 0: Project Scaffold & Foundation
+Date: March 12, 2026
+
+Initialization of the project structure, dependency management, and core infrastructure.
+
+### Added
+* 🐣 Complete directory structure following the implementation plan.
+* 🐣 Environment management with `pyproject.toml` and `uv`.
+* 🐣 Multi-service Docker infrastructure (MySQL, Redis, Qdrant).
+* 🐣 Core configuration module (`pydantic-settings`) and structured logging (`structlog`).
+* 🐣 Base exception classes and shared utility skeletons.

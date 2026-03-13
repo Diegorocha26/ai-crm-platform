@@ -1,0 +1,66 @@
+description = "Generate a CHANGELOG entry based on branch changes"
+
+prompt = '''
+
+Generate a CHANGELOG entry summarizing the changes introduced in the current branch.
+
+Follow the Keep a Changelog style and use the format below.
+
+Use the following information about the branch:
+!{git fetch origin}
+
+Commit history:
+!{git log --no-merges origin/main..HEAD --pretty=format:"- %s"}
+
+Files changed and change magnitude:
+!{git diff --stat origin/main...HEAD}
+
+Partial diff of the branch (may be truncated):
+```diff
+!{git diff --unified=1 origin/main...HEAD}
+```
+
+Instructions:
+    - Prioritize meaningful user-facing changes
+    - Use commit messages to understand intent
+    - Use the file list to understand the scope of changes
+    - Inspect the diff to determine what actually changed in the files
+    - Group related changes together
+    - Collapse related commits into a single bullet point when appropriate
+    - Do not repeat individual commits verbatim
+    - Ignore trivial internal refactors unless they affect behavior
+    - Write concise, clear bullet points
+
+Return the result using EXACTLY this structure (only include sections that contain changes):
+
+## vX.X.X — <Short release or milestone name>
+Date: <Month Day, Year>
+
+<One short sentence summarizing the release>
+
+### Added
+🐣 ...
+
+### Changed
+🔧 ...
+
+### Fixed
+🐛 ...
+
+### Docs
+📄 ...
+
+### Style
+🎨 ...
+
+Rules:
+    - Only include sections that have changes
+    - Use markdown headers exactly as shown
+    - Use bullet points for changes
+    - Do not invent changes that are not supported by the commits or diff
+    - Do not repeat commit messages verbatim
+    - Keep bullets concise and grouped logically
+
+Return ONLY the CHANGELOG entry.
+
+'''

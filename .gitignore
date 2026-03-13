@@ -21,10 +21,6 @@ coverage.xml
 .pytest_cache
 .hypothesis
 node_modules/
-.env
-.env.local
-.env.production
-.env.docker
 .DS_Store
 .vscode/
 .idea/
@@ -32,6 +28,13 @@ node_modules/
 *.swo
 *~
 uv.lock
+
+# ENVs
+.env.local    
+.env.compose
+.env.docker
+.env.test
+.env.prod
 
 # For the moment
 AI_CRM_Platform_Implementation_Plan.md
