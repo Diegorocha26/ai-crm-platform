@@ -1,8 +1,13 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
 from functools import lru_cache
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+ENV_FILE = os.getenv("ENV_FILE", ".env.local")
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env.local")
+    model_config = SettingsConfigDict(env_file=ENV_FILE)
+    print(f"Loading settings from: {ENV_FILE}")
 
     # App
     APP_NAME: str = "AI CRM Platform"
