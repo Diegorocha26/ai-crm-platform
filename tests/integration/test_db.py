@@ -1,3 +1,5 @@
+# TODO: integrate this with pytest in the future, in the meantime it's fine
+
 import asyncio
 from sqlalchemy import text
 from core.database import AsyncSessionLocal, engine
