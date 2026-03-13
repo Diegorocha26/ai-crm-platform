@@ -1,18 +1,17 @@
+from __future__ import annotations
 import enum
 import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 from sqlalchemy import String, JSON, DateTime, Enum, Text, func
-from sqlalchemy.dialects.mysql import MEDIUMTEXT
+from sqlalchemy.dialects.mysql import MEDIUMTEXT, CHAR
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from core.database import Base
-from __future__ import annotations
 
 if TYPE_CHECKING:
     from models.lead import Lead
 
 class EnrichmentStatus(enum.Enum):
-
     PENDING = "pending"
     PROCESSING = "processing"
     DONE = "done"
@@ -25,11 +24,11 @@ class Company(Base):
     """
     __tablename__ = "companies"
 
-    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    id: Mapped[str] = mapped_column(CHAR(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name: Mapped[str | None] = mapped_column(String(255))
     website: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     description: Mapped[str | None] = mapped_column(Text)
-    industry: Mapped[str | None] = mapped_column(String(100))
+    industry: Mapped[str | None] = mapped_column(String(100), index=True)
     business_model: Mapped[str | None] = mapped_column(String(50)) # e.g., B2B, B2C
     target_customer: Mapped[str | None] = mapped_column(Text)
     
@@ -49,7 +48,7 @@ class Company(Base):
     enrichment_status: Mapped[EnrichmentStatus] = mapped_column(
         Enum(EnrichmentStatus), 
         default=EnrichmentStatus.PENDING,
-        server_default="PENDING"
+        server_default="pending"
     )
     
     created_at: Mapped[datetime] = mapped_column(

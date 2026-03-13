@@ -1,15 +1,20 @@
+from __future__ import annotations
+import enum
 import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
-from sqlalchemy import String, DateTime, ForeignKey, Text, func
+from sqlalchemy import String, DateTime, Enum, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from core.database import Base
-from __future__ import annotations
 
 if TYPE_CHECKING:
     from models.lead import Lead
 
-# TODO: should this also have enum for content_type (outreach_email/summary/talking_points)
+class ContentType(enum.Enum):
+    OUTREACH_EMAIL = "outreach_email"
+    SUMMARY = "summary"
+    TALKING_POINTS = "talking_points"
+
 class GeneratedContent(Base):
     """
     Stores final output content generated for leads (e.g., outreach emails).
@@ -18,10 +23,10 @@ class GeneratedContent(Base):
     __tablename__ = "generated_content"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    lead_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("leads.id", ondelete="CASCADE"), index=True)
+    lead_id: Mapped[str] = mapped_column(ForeignKey("leads.id", ondelete="CASCADE"), index=True)
     
     # outreach_email, summary, talking_points, etc.
-    content_type: Mapped[str] = mapped_column(String(50))
+    content_type: Mapped[ContentType] = mapped_column(Enum(ContentType))
     
     content: Mapped[str] = mapped_column(Text)
     
@@ -29,12 +34,13 @@ class GeneratedContent(Base):
     model_used: Mapped[str] = mapped_column(String(100))
     
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), 
+        DateTime(timezone=True),
+        index=True,
         server_default=func.now()
     )
 
     # Relationship to Lead
-    lead: Mapped["Lead"] = relationship("Lead", back_populates="generated_contents")
+    lead: Mapped[Lead] = relationship("Lead", back_populates="generated_contents")
 
     def __repr__(self) -> str:
         return f"<GeneratedContent(lead_id={self.lead_id}, type={self.content_type})>"

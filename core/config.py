@@ -17,8 +17,12 @@ class Settings(BaseSettings):
     MYSQL_DB: str
     
     @property
-    def DATABASE_URL(self) -> str:
+    def DATABASE_ASYNC_URL(self) -> str:
         return f"mysql+aiomysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DB}"
+
+    @property
+    def DATABASE_SYNC_URL(self) -> str:
+        return f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DB}"
 
     # Redis
     REDIS_URL: str = "redis://localhost:6379/0"

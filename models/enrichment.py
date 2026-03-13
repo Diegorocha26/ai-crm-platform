@@ -2,6 +2,7 @@ import enum
 import uuid
 from datetime import datetime
 from sqlalchemy import String, DateTime, Enum, JSON, Integer, func
+from sqlalchemy.dialects.mysql import CHAR
 from sqlalchemy.orm import Mapped, mapped_column
 from core.database import Base
 
@@ -24,7 +25,7 @@ class Enrichment(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     
     # Generic reference to the entity being enriched
-    entity_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    entity_id: Mapped[str] = mapped_column(CHAR(36), index=True)
     entity_type: Mapped[EntityType] = mapped_column(Enum(EntityType))
     
     enrichment_type: Mapped[EnrichmentType] = mapped_column(Enum(EnrichmentType))
@@ -40,7 +41,8 @@ class Enrichment(Base):
     latency_ms: Mapped[int | None] = mapped_column(Integer)
     
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), 
+        DateTime(timezone=True),
+        index=True, 
         server_default=func.now()
     )
 

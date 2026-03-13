@@ -7,7 +7,7 @@ settings = get_settings()
 
 # Create async engine with pool_pre_ping for stability
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    settings.DATABASE_ASYNC_URL,
     pool_pre_ping=True,
     echo=settings.DEBUG,
 )
