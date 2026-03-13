@@ -13,5 +13,6 @@ Use emojis for types of changes:
     - for bug fxes use 🐛
     - for new features use 🐣
     - for docs use 📄
+    - for improvements or refactors use 🔧
 
 '''
