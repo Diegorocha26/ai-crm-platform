@@ -13,7 +13,11 @@ class NewsScraper:
         self.base_url = "https://news.google.com/rss/search?q="
         self.client = httpx.AsyncClient(timeout=10.0, follow_redirects=True)
 
-    async def scrape_news(self, company_name: str) -> List[NewsItem]:
+    async def close(self):
+        """Close the underlying httpx client."""
+        await self.client.aclose()
+
+    async def scrape_news(self, company_name: str) -> List[NewsItem]:        
         query = quote_plus(company_name)
         url = f"{self.base_url}{query}"
         

@@ -35,6 +35,13 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["core", "api", "models", "schemas", "services", "workers", "monitoring"]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "integration: tests that require external services"
+]
+
 [dependency-groups]
 dev = [
     "pytest>=8.2.0",
