@@ -29,18 +29,27 @@ TECH_KEYWORDS = {
 class WebsiteScraper(BaseScraper):
     async def scrape(self, url: str) -> RawCompanyData:
         logger.info("scraping_website", url=url)
+        html = None
 
+        # 1. Attempt fast HTTP fetch
         try:
             html = await self._fetch_html(url)
-
-            if len(html) < 500: # Heuristic: if content is too short, might need JS
-                 logger.info("content_too_short_switching_to_playwright", url=url, length=len(html))
-                 html = await self._fetch_with_js(url)
-
         except Exception as e:
-            logger.info("httpx_failed_retrying_playwright", url=url, error=str(e))
-            html = await self._fetch_with_js(url)
-            
+            logger.info("httpx_fetch_failed", url=url, error=str(e))
+
+        # 2. If HTTP failed OR returned a "thin" page, try Playwright
+        if not html or len(html) < 500:
+            logger.info("attempting_playwright_fetch", url=url, reason="missing_or_short_html")
+            try:
+                js_html = await self._fetch_with_js(url)
+                html = js_html # Success! Use the JS-rendered version
+            except Exception as e:
+                logger.error("playwright_fetch_failed", url=url, error=str(e))
+                # If we have NO html at all, we must raise. 
+                # If we have the 'short' html from step 1, we keep it and continue.
+                if not html:
+                    raise
+
         soup = BeautifulSoup(html, "html.parser")
         
         name = self._extract_company_name(soup)

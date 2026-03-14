@@ -2,7 +2,7 @@ description = "Create a commit message based on staged changes"
 
 prompt = '''
 
-Generate a commit message, listing and summarizing the main changes, based on the following git diff:
+Generate a concise commit message, listing and summarizing the main changes, based on the following git diff:
 
 ```diff
 !{git diff --staged}
