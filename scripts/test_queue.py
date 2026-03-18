@@ -8,7 +8,7 @@ from workers.queues import QUEUE_SCRAPE
 # Ensure project root is in path
 sys.path.append(os.getcwd())
 
-def test_integration():
+def run_integration_smoke_test():
     settings = get_settings()
     redis_conn = Redis.from_url(settings.REDIS_URL)
     
@@ -61,4 +61,4 @@ def test_integration():
         print("Integration test passed for Publishing only.")
 
 if __name__ == "__main__":
-    test_integration()
+    run_integration_smoke_test()

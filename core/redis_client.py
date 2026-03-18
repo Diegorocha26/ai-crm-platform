@@ -4,8 +4,8 @@ from core.config import get_settings
 
 settings = get_settings()
 
-# Global sync client for RQ
-sync_redis_client = Redis.from_url(settings.REDIS_URL, decode_responses=True)
+# Global sync client for RQ (Must NOT use decode_responses=True for RQ/Pickle compatibility)
+sync_redis_client = Redis.from_url(settings.REDIS_URL)
 
 # Global async client (lazy initialization)
 _async_redis_client: aioredis.Redis | None = None
