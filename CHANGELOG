@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.3.0 — Ingestion Pipeline & Worker Infrastructure
+Date: March 17, 2026
+
+Implementation of the core ingestion pipeline, Redis-backed job queuing system, and automated scraping workers.
+
+### Added
+- 🐣 Centralized `Makefile` for project setup, service management, and testing automation.
+- 🐣 Automated ingestion pipeline featuring robust CSV parsing, data normalization, and multi-stage job publishing.
+- 🐣 Redis-backed queuing infrastructure with dedicated queues for scraping, enrichment, and embeddings.
+- 🐣 Asynchronous scrape worker with built-in support for automated retries, database persistence, and a Dead Letter Queue (DLQ) for failed jobs.
+- 🐣 Comprehensive testing suite including unit tests for data normalization and integration tests for queue operations.
+- 🐣 `CompanyCreate` schema with flexible support for tech stacks and social link metadata.
+
+### Changed
+- 🔧 Optimized Redis client with lazy imports to ensure the application remains importable in Windows environments.
+- 🔧 Refactored worker error handling to utilize native RQ retry tracking and preserve full exception tracebacks.
+
+### Fixed
+- 🐛 Resolved a `ValueError` in the CSV parser by properly managing file stream lifecycles.
+- 🐛 Corrected deprecated `datetime.utcnow()` usage in worker failure logging to use timezone-aware UTC objects.
+
 ## v0.2.0 — Phase 2: Scraper Service
 Date: March 13, 2026
 
