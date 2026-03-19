@@ -13,6 +13,8 @@ class EnrichmentType(enum.Enum):
     SUMMARY = "summary"
     SCORING = "scoring"
     RAG = "rag"
+    OUTREACH = "outreach"
+    OTHER = "other"
 
 class Enrichment(Base):
     """
