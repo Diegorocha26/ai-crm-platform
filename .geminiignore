@@ -1,1 +1,25 @@
-!AI_CRM_Platform_Implementation_Plan.md
+.venv/
+__pycache__/
+.pytest_cache/
+.git/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+! .env.example
+node_modules/
+dist/
+build/
+*.egg-info/
+.coverage
+htmlcov/
+.mypy_cache/
+.tox/
+.nox/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+!AI_CRM_Platform_Implementation_Plan.md  
