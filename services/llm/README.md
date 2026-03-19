@@ -47,7 +47,7 @@ Run unit tests:
 uv run pytest tests/unit/test_prompt_registry.py tests/unit/test_output_parser.py
 ```
 
-Run manual integration test (mocks OpenAI if no key):
+Run manual integration smoke test (mocks OpenAI if no key):
 ```bash
-uv run python scripts/test_llm.py
+uv run python scripts/smoke_test_llm.py
 ```

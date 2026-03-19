@@ -23,7 +23,7 @@ user: |
   
   Respond with JSON:
   {
-    "score": float (1-10),
+    "score": 7.5,
     "reasoning": "string explaining the score logic",
     "key_factors": ["positive factor 1", "negative factor 2"],
     "recommended_action": "reach_out | nurture | disqualify"

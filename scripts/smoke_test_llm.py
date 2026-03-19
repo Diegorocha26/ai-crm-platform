@@ -2,7 +2,7 @@ import asyncio
 from unittest.mock import AsyncMock, MagicMock
 from services.llm.client import LLMClient
 
-async def test_llm_flow():
+async def run_smoke_test():
     print("Testing LLM Client Flow (Mocked OpenAI)...")
     
     # Mocking OpenAI client injection
@@ -41,7 +41,7 @@ async def test_llm_flow():
     print("  Result parsed successfully:")
     print(result)
     assert result.industry == "Fintech"
-    print("✅ LLM Client Flow Test Passed!")
+    print("✅ LLM Client Flow Smoke Test Passed!")
 
 if __name__ == "__main__":
-    asyncio.run(test_llm_flow())
+    asyncio.run(run_smoke_test())
