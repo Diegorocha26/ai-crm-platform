@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.4.0 — Phase 4: LLM Service & Prompt Registry
+Date: March 19, 2026
+
+Implementation of the core LLM orchestration layer, including versioned prompt management, resilient output parsing, and production telemetry.
+
+### Added
+- 🐣 `LLMClient` with OpenAI integration, structured JSON response format, and exponential backoff retries for transient failures.
+- 🐣 Jinja2-powered `PromptRegistry` for managing versioned YAML templates with automatic Pydantic validation and in-memory caching.
+- 🐣 Resilient `OutputParser` using `json-repair` to handle and correct malformed LLM responses.
+- 🐣 Production telemetry via `llm_logger` for comprehensive logging of token usage, latency, and inputs/outputs to both `structlog` and MySQL.
+- 🐣 Standardized Pydantic output schemas for company market intelligence, B2B lead scoring, and personalized sales outreach.
+- 🐣 Initial AI prompt library for company summaries, sales fit analysis, and SDR email generation.
+- 🐣 Comprehensive testing infrastructure including unit tests for core components and an end-to-end mocked integration script.
+
+### Changed
+- 🔧 Updated `EnrichmentType` database schema via Alembic to support `OUTREACH` and `OTHER` operation types.
+- 🔧 Refactored internal telemetry from `eval_logger` to `llm_logger` for improved architectural clarity.
+
+### Docs
+- 📄 Added service-level `README.md` covering architecture, configuration, and guidelines for adding new AI capabilities.
+
 ## v0.3.0 — Ingestion Pipeline & Worker Infrastructure
 Date: March 17, 2026
 
