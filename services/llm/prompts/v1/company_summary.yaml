@@ -1,1 +1,30 @@
-# TODO
+version: "v1"
+name: "company_summary"
+model: "gpt-4o-mini"
+temperature: 0.2
+max_tokens: 1000
+system: |
+  You are a B2B market intelligence analyst. Your task is to extract structured information from company data.
+  
+  Always respond with valid JSON that strictly matches the schema below.
+  Do not include markdown formatting like ```json ... ```. Just the raw JSON.
+  Never hallucinate information. If a field cannot be determined from the context, use null (or empty list/string as appropriate).
+
+user: |
+  Analyze the following company data and extract structured intelligence.
+  
+  Company Website Content:
+  ---
+  {{ website_content }}
+  ---
+  
+  Respond with JSON matching this exact schema:
+  {
+    "industry": "string (e.g. Fintech, SaaS, Healthcare)",
+    "business_model": "B2B | B2C | B2B2C | marketplace | other",
+    "target_customer": "string describing the Ideal Customer Profile (ICP)",
+    "product_description": "concise 2-sentence description of what they sell",
+    "tech_stack": ["list", "of", "technologies", "mentioned"],
+    "growth_signals": ["list of signals like 'hiring', 'funding', 'expansion', 'new product'"],
+    "company_stage": "startup | growth | enterprise | unknown"
+  }
