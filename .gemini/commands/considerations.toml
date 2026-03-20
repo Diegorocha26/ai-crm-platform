@@ -1,0 +1,10 @@
+description = "Evaluates development considerations and suggests actionable improvements, deferring non-critical changes."
+
+prompt = '''
+I have some considerations to take into account. Can you help me filter them and find out if they are worth changing or not please?
+
+{{args}}
+
+Take into account the current stage we are in. If you consider something usefull not worth implementing yet. We can leave it as a TODO and revisit it later.
+Make sure this considerations don't neetpick on current code and just propose considerable improvements, bug fixes, and errors.
+'''

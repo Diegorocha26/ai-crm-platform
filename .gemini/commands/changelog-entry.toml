@@ -1,7 +1,6 @@
 description = "Generate a CHANGELOG entry based on branch changes"
 
 prompt = '''
-
 Generate a CHANGELOG entry summarizing the changes introduced in the current branch.
 
 Follow the Keep a Changelog style and use the format below.
