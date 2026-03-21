@@ -6,7 +6,7 @@ ENV_FILE = os.getenv("ENV_FILE", ".env.local")
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=ENV_FILE)
+    model_config = SettingsConfigDict(env_file=ENV_FILE, extra="allow")
     print(f"Loading settings from: {ENV_FILE}")
 
     # App
@@ -49,6 +49,10 @@ class Settings(BaseSettings):
 
     # Rate limiting
     RATE_LIMIT_PER_MINUTE: int = 60
+
+    # Enrichment
+    ENRICHMENT_PROVIDER: str = "mock"
+    HUNTER_API_KEY: str | None = None
 
 @lru_cache()
 def get_settings() -> Settings:
