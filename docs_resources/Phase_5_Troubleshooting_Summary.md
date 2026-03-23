@@ -36,3 +36,8 @@ This document summarizes the technical hurdles encountered during the implementa
 *   **Issue:** The test didn't "see" the changes made by the Orchestrator even though the DB was updated.
 *   **Fix:** Added `db_session.expire_all()` to the test to force a refresh from the database.
 *   **Learning:** When two different components (the Test and the Orchestrator) use different database sessions/connections, the first session may hold "stale" versions of objects in its internal cache.
+
+### 8. `-e` vs `--env-file` in Docker Compose
+*   **Issue:** MySQL containers remained "unhealthy" even when passing `-e` flags for credentials.
+*   **Fix:** Used `--env-file .env.docker` to provide variables to the **Docker Compose engine** for interpolation.
+*   **Learning:** The `-e` flag sets environment variables **inside the container** (after it starts). However, variables needed *inside* the `docker-compose.yml` file itself (like `${MYSQL_USER}`) must be provided via an `--env-file` or the host shell so the engine can "fill in the blanks" before creating the containers.

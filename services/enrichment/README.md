@@ -43,7 +43,7 @@ Integration tests for the enrichment service run within a Dockerized environment
 
 ### Local Integration Test
 ```bash
-docker compose run --rm -e ENV_FILE=.env.docker api uv run pytest tests/integration/test_enrichment.py
+docker compose --env-file .env.docker run --rm -e ENV_FILE=.env.docker api uv run pytest tests/integration/test_enrichment.py
 ```
 
 ## TODOs
