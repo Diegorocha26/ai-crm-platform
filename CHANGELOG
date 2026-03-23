@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.5.0 — Phase 5: Enrichment Orchestration & Dockerization
+Date: March 23, 2026
+
+Complete implementation of the enrichment pipeline, Docker-ready infrastructure, and enhanced LLM output validation.
+
+### Added
+- 🐣 Enrichment Orchestrator: Central engine for coordinating LLM summarization and external API data fetching concurrently.
+- 🐣 External Provider Pipeline: Decoupled provider pattern with an initial Mock provider for development and testing.
+- 🐣 Enrichment Worker: Full RQ worker implementation featuring automated Dead Letter Queue (DLQ) handling.
+- 🐣 Dockerized Environment: Dedicated Dockerfiles for API and workers, including Playwright browser binaries and RQ dashboard integration.
+- 🐣 Considerations Command: New Gemini CLI tool for structured evaluation of development improvements and suggestions.
+- 🐣 Schema Validation: Added `EmailResult` schema and enhanced LLM output models with robust field validators.
+
+### Changed
+- 🔧 Testing Infrastructure: Standardized async test fixtures to function scope to ensure database session consistency.
+- 🔧 Settings Configuration: Updated Pydantic settings to allow extra environment variables and added enrichment provider configurations.
+
+### Docs
+- 📄 Phase 5 Troubleshooting: Detailed documentation of technical hurdles, including Playwright installation and Docker Compose variable interpolation.
+- 📄 Enrichment README: Comprehensive guide for the enrichment service explaining components, workflows, and local testing.
+
 ## v0.4.0 — Phase 4: LLM Service & Prompt Registry
 Date: March 19, 2026
 
