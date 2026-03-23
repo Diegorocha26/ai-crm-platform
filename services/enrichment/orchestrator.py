@@ -123,17 +123,6 @@ class EnrichmentOrchestrator:
         company.tech_stack = response.tech_stack
         company.growth_signals = response.growth_signals
         
-        # Save enrichment log
-        enrichment_record = Enrichment(
-            entity_id=str(company.id),
-            entity_type=EntityType.COMPANY,
-            enrichment_type=EnrichmentType.SUMMARY,
-            prompt_version="v1", # TODO: Get from client response
-            parsed_output=response.model_dump(),
-            model_used=settings.OPENAI_MODEL,
-        )
-        session.add(enrichment_record)
-        
     async def _enrich_emails(self, company: Company, session: AsyncSession):
         """Call external API to find emails."""
         if not company.website:
