@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+ENV UV_SYSTEM_PYTHON=1 UV_COMPILE_BYTECODE=1
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --group dev
+# Install Playwright and its system dependencies
+RUN uv run playwright install --with-deps chromium
+COPY . .
+CMD ["uv", "run", "rq", "worker", "scrape", "enrich", "embed", "--url", "${REDIS_URL}"]

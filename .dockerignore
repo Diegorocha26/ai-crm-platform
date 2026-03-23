@@ -1,0 +1,20 @@
+.venv
+.git
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.db
+.env*
+node_modules
+dist
+build
+
+# Docs and Plans
+docs_resources/
+AI_CRM_Platform_Implementation_Plan.md
+*.md
+plans/
+.gemini/
+.geminiignore

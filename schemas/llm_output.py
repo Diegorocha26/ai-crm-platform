@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 class CompanySummaryOutput(BaseModel):
     industry: str | None = None
@@ -9,6 +9,20 @@ class CompanySummaryOutput(BaseModel):
     tech_stack: list[str] = Field(default_factory=list)
     growth_signals: list[str] = Field(default_factory=list)
     company_stage: Literal["startup", "growth", "enterprise", "unknown"] = "unknown"
+
+    @field_validator("business_model", mode="before")
+    @classmethod
+    def validate_business_model(cls, v):
+        if v is None:
+            return "other"
+        return v
+
+    @field_validator("company_stage", mode="before")
+    @classmethod
+    def validate_company_stage(cls, v):
+        if v is None:
+            return "unknown"
+        return v
 
 class LeadScoreOutput(BaseModel):
     score: float = Field(ge=1, le=10, description="Score from 1 to 10")
