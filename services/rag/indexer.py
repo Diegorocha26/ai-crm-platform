@@ -42,8 +42,9 @@ class Indexer:
         embedding = await self.embedder.embed_text(profile_text)
 
         # 4. Upsert to Qdrant
-        # Note: we use the current time for the payload to stay consistent
-        now = datetime.now()
+        # We use the timestamp that was already set on the company object
+        # for consistency between DB and Qdrant.
+        embedded_at_str = company.embedded_at.isoformat() if company.embedded_at else datetime.datetime.now().isoformat()
 
         point = PointStruct(
             id=str(company.id),
@@ -53,7 +54,7 @@ class Indexer:
                 "name": company.name,
                 "industry": company.industry,
                 "business_model": company.business_model,
-                "embedded_at": now.isoformat(),
+                "embedded_at": embedded_at_str,
                 "profile_text": profile_text
             }
         )
