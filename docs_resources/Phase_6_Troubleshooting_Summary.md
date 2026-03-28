@@ -36,3 +36,8 @@ This document summarizes the technical hurdles and architectural decisions made 
 *   **Issue:** Alembic reported being at `head` but the database was missing columns because `pytest` had created the tables directly, skipping the migration history.
 *   **Fix:** Used `alembic stamp <revision>` to force the migration history to match a specific state, then `alembic upgrade head` to apply missing changes.
 *   **Learning:** Be careful when mixing direct SQLAlchemy `create_all` (common in tests) with Alembic migrations. If they get out of sync, `stamp` is the tool to reconcile them.
+
+### 8. Event Loop Affinity in Synchronous Workers (RQ)
+*   **Issue:** Workers running via `asyncio.run()` (like in RQ) create a fresh event loop for every job. Reusing global singleton clients (which bind to the *first* loop created) causes subsequent jobs to crash with "loop closed" or affinity errors.
+*   **Fix:** Refactored the `embedding_worker` to instantiate fresh clients and RAG services *inside* the job function, and explicitly closed them in a `finally` block.
+*   **Learning:** Task workers that bridge sync and async code must manage client lifecycles per-job. Never use module-level async singletons in a multi-loop environment without careful reset or dependency injection.
