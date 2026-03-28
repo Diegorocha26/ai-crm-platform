@@ -10,11 +10,12 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class Embedder:
-    def __init__(self):
+    def __init__(self, redis_client=None, openai_client=None):
         if not settings.OPENAI_API_KEY:
              raise ValueError("OpenAI API Key not configured")
-        self.client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
-        self.redis = get_redis_client()
+        
+        self.client = openai_client or AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+        self.redis = redis_client or get_redis_client()
         self.model = settings.OPENAI_EMBEDDING_MODEL
 
     async def embed_text(self, text: str) -> List[float]:

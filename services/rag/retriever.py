@@ -30,8 +30,9 @@ class RetrievedChunk:
         return f"<RetrievedChunk id={self.id} score={self.score}>"
 
 class Retriever:
-    def __init__(self):
-        self.client = get_qdrant_client()
+    def __init__(self, qdrant_client=None, embedder=None):
+        self.client = qdrant_client or get_qdrant_client()
+        self.embedder = embedder or get_embedder()
         self.collection = settings.QDRANT_COLLECTION
 
     async def search(self, query: str, top_k: int = 5) -> List[RetrievedChunk]:
@@ -46,7 +47,7 @@ class Retriever:
 
             # 1. Generate embedding (External API call)
             # TODO: Add retry logic for embedding failures
-            embedding = await get_embedder().embed_text(query)
+            embedding = await self.embedder.embed_text(query)
             
             # 2. Query Qdrant
             response = await self.client.query_points(

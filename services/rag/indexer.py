@@ -10,9 +10,9 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class Indexer:
-    def __init__(self):
-        self.client = get_qdrant_client()
-        self.embedder = Embedder()
+    def __init__(self, qdrant_client=None, embedder=None):
+        self.client = qdrant_client or get_qdrant_client()
+        self.embedder = embedder or Embedder()
         self.collection = settings.QDRANT_COLLECTION
 
     async def index_company(self, company: Company):

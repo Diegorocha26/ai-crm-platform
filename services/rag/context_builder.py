@@ -1,8 +1,8 @@
 from services.rag.retriever import Retriever
 
 class ContextBuilder:
-    def __init__(self):
-        self.retriever = Retriever()
+    def __init__(self, retriever=None):
+        self.retriever = retriever or Retriever()
 
     async def build_context(self, query: str, top_k: int = 3) -> str:
         """
