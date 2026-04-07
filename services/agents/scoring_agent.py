@@ -24,6 +24,7 @@ class ScoringAgent(BaseAgent):
         if not lead_id:
             raise ValueError("lead_id is required in task")
 
+        # TODO: use try blocks to garentee rollbacks in case somethings goes wrong
         async with self.db_session_factory() as session:
             # 1. Fetch Lead + Company context
             result = await session.execute(
@@ -42,7 +43,7 @@ class ScoringAgent(BaseAgent):
             search_query = f"Ideal Customer Profile for SaaS in {company.industry} and {company.business_model}"
             retrieved_chunks = await self.retriever.search(search_query, top_k=2)
             
-            # (Context can be used in the prompt variables if desired, for now kept simple)
+            # TODO: (Context can be used in the prompt variables if desired, for now kept simple)
 
             # 3. Call LLM for base score
             variables = {

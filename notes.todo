@@ -1,0 +1,102 @@
+# TODOs
+
+Phase 7
+- [ ] Sync this notes file with other computer
+- [ ]
+- [ ] run tests
+- [ ] CHANGELOG
+
+Phase 6
+- [x] run tests
+- [x] CHANGELOG
+
+Phase 5
+- [x] run tests
+- [x] remove TODOs from init files
+- [x] should the apis be in different places like the enrichement part
+- [x] add qdrant to docker compose again
+- [x] check if you need to add more things to the docker ignore file, such as the resources and readme files (files that don't serve a code functionality)
+- [x] remove qdrant when testing or search for an alternative
+- [x] CHANGELOG
+
+Phase 4
+- [x] do i need to run migrations?
+- [x] make a command for
+        again, i have some considerations to take into account. can youn help me filter them and find out if    
+        they are worth changing or not please? /n [Pasted Text: 25 lines] /n also take into account that we     
+        are barely in stage for. if you consider something useful utb not worth implementing yet. we can        
+        leave it as a TODO 
+- [x] add TODOs from the planning phase questions
+- [x] add gemini md file for general development rules
+- [x] CHANGELOG
+
+Phase 3
+- [x] TESTING
+- [x] tests\unit\test_normalizer.py
+- [x] tests\integration\test_db.py
+- [x] tests\unit\test_csv_parser.py
+- [x] scripts\test_queue.py
+- [x] i think wsl deleted the venv
+- [x] see if it's better to test on docker or on wsl
+- [x] install redis and run it
+- [x] test workers on docker or WSL
+- [x] try running it on ubuntu and in docker
+
+Phase 2
+- [x] check the last changes or just change for and HTTP exception
+
+Phase 1
+- [x] alembic migrations
+- [x] run migrations in docker and check
+- [x] dbdiagram.io
+- [x] check branch merge with codex
+
+End TODOs
+- [ ] implement local LLMs and LiteLLM
+- [ ] async redis should close on shutdown (FastAPI)
+- [ ] add RUN uv run playwright install chromium to the docker build to include browser binaries
+- [ ] integrate CI/CD with github actions
+- [ ] services\scraper\website_scraper.py "truncated_html = html[:100000]" truncating may break tags, use compression, extract text, etc
+- [ ] better .env setup with base + specific case (docker / local / testing)
+- [ ] scripts\test_queue.py should this be in the integration tests?
+- [ ] i think .env.compose is actually not neccesary
+- [ ] is it really the best option to have the "rq" imports inside the functions?
+- [ ] add company context to the crm and take into consideration when evaluating leads
+- [ ] ask AI to scan the whole code base to find bugs or inconsistencies
+- [ ] check if its using structured outputs or just pydantic validation. if not, would it be worth implementing structured outputs
+- [ ] run script to create collection on setup of docker container
+- [ ] check test structure and should any more tests be implemented or deleted
+
+Future Implementations
+- [ ] different evals such as drift monitoring, llm-as-a-judge, tool guardrails
+- [ ] monitoring token usage, latency (done?) , runtime monitoring, drift detection
+- [ ] check and add (if needed) proper logging besides just terminal logging
+- [ ] test out prompts and improve them
+- [ ] for the cold email, add strategies from the internet and examples of eye catching subjects
+- [ ] tests\integration\test_db.py integrate this with pytest
+- [ ] services\scraper\news_scraper.py add other new sources of make it source agnostic
+- [ ] services\scraper\website_scraper.py add better logic for link extraction (some may not be directly as links)
+
+
+
+
+# Notes
+
+- Redis is intentionally stateless in this system. MySQL is the source of truth for job state via 
+the enrichment_status field. Lost jobs are recovered either through the dead letter queue or a 
+periodic requeue task that catches records stuck in pending — so Redis durability isn't a requirement.
+Caching and rate limiting is also ephemeral by nature, so there's no problem storing it without a volume.
+
+- I decided to use TYPE_CHECKING and from __future__ import annotations to bypass circular imports while 
+maintaining full IDE support. The TYPE_CHECKING block gives Pylance the information it needs for autocompletion 
+and error-catching, but hides those imports from the Python interpreter at runtime to prevent an infinite loop (circular imports). 
+By enabling annotations, Python treats type hints as strings, which stops the app from crashing when it encounters 
+a class that hasn't been fully defined yet. This approach, paired with SQLAlchemy’s string-based relationship references, 
+ensures the system remains modular and type-safe without any startup errors.
+
+- Database migrations were tested in both environments: locally and inside Docker. 
+Running `uv run alembic upgrade head` against a local MySQL instance confirmed the schema and 
+models were aligned during development, while executing the same migrations against the Docker 
+MySQL container verified that the environment configuration, networking, and credentials were 
+correct for the containerized setup. Validating migrations in both contexts helped ensure the 
+database layer behaves consistently regardless of where the application runs.

@@ -112,3 +112,6 @@ async def test_similarity_agent_run(mock_llm_client, mock_retriever):
     assert result[0][0].name == "Similar Inc"
     assert result[0][1] == 0.95
     mock_retriever.search_similar_companies.assert_called_with(company_id=company_id, top_k=3)
+
+
+# TODO: check

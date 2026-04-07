@@ -68,3 +68,5 @@ uv run python scripts/test_agents.py
 Agents rely on structured output defined in `schemas/llm_output.py`:
 - `LeadScoreOutput`: Contains `score`, `reasoning`, `key_factors`, and `recommended_action`.
 - `OutreachOutput`: Contains `subject`, `body`, `tone`, and `personalization_hooks`.
+
+# TODO: check

@@ -27,6 +27,7 @@ class OutreachAgent(BaseAgent):
         if not lead_id:
             raise ValueError("lead_id is required in task")
 
+        # TODO: use try blocks to garentee rollbacks in case somethings goes wrong
         async with self.db_session_factory() as session:
             # 1. Fetch Lead + Company context
             result = await session.execute(

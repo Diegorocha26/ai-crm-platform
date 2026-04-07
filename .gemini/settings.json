@@ -3,7 +3,8 @@
     "footer": {
       "hideContextPercentage": false
     },
-    "autoThemeSwitching": false
+    "autoThemeSwitching": false,
+    "theme": "Atom One"
   },
   "experimental": {
     "plan": true
